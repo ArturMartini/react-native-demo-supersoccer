@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, FlatList, Image, processColor } from 'react-nat
 import { WebView } from 'react-native-webview'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import Icon from 'react-native-vector-icons/AntDesign';
+import { Rating, AirbnbRating } from 'react-native-ratings';
 
 export default class ListPosts extends Component {
     constructor() {
@@ -51,16 +52,12 @@ export default class ListPosts extends Component {
                 <WebView source={{ uri: item.url }} />
             </View>
             <View style={styles.divButton}>
-                <TouchableOpacity 
-                    on
-                    >
-                    <Icon.Button name="like1" backgroundColor={"#FFF"} color={"black"}>
-                    </Icon.Button>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.button}>
-                    <Icon.Button name="dislike1" backgroundColor={"#FFF"} color={"black"}>
-                    </Icon.Button>
-                </TouchableOpacity>
+                <AirbnbRating
+                    reviews={['1/5', '2/5', '3/5', '4/5', '5/5']}
+                    isDisabled={true}
+                    onFinishRating={this.ratingCompleted}
+                    style={{ paddingVertical: 10 }}
+                />
             </View>
         </View>
     )
