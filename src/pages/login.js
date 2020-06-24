@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { View, Text, TextInput, StyleSheet, Image, AsyncStorage } from 'react-native'
+import { View, Text, TextInput, StyleSheet } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import { NavigationActions, StackActions } from 'react-navigation'
 import api from '../services/api';
 
 export default class Login extends Component {
@@ -16,22 +17,32 @@ export default class Login extends Component {
                 <Text style={styles.textTitle}>SUPER SOCCER</Text>
                 <View style={styles.containerLogin}>
                     <Text style={styles.text}>email</Text>
-                    <TextInput 
-                        ref={(email) => {email = email}}
-                        onChangeText={(email) => this.setState({email})}
-                        autoCompleteType='email' 
+                    <TextInput
+                        ref={(email) => { email = email }}
+                        onChangeText={(email) => this.setState({ email })}
+                        autoCompleteType='email'
                         style={styles.input} />
                     <Text style={styles.text}>password</Text>
                     <TextInput
-                        ref={(password) => {password = password}}
-                        onChangeText={(password) => this.setState({password})}
-                        secureTextEntry={true} 
+                        ref={(password) => { password = password }}
+                        onChangeText={(password) => this.setState({ password })}
+                        secureTextEntry={true}
                         style={styles.input}></TextInput>
+                    <View style={styles.containerInner}>
+                        <View>
+                            <TouchableOpacity style={styles.buttonSignup}
+                                onPress={() => this.props.navigation.navigate('Signup')}>
+                                <Text style={styles.inputText}>SIGN UP</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View>
+                            <TouchableOpacity style={styles.buttonLogin}
+                                onPress={() => this.onLogin()}>
+                                <Text style={styles.inputText}>LOGIN</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
                 </View>
-                <TouchableOpacity style={styles.button} 
-                    onPress={() => this.onLogin()}>
-                    <Text style={styles.inputText}>LOGIN</Text>
-                </TouchableOpacity>
             </View>
         );
     }
@@ -41,10 +52,14 @@ export default class Login extends Component {
             email: this.state.email,
             password: this.state.password,
         }
-    
+
         const response = await api.post('/v1/login', login)
         console.log(response.data)
-        this.props.navigation.navigate("Initial", {user: response.data})
+        this.props.navigation.dispatch(StackActions.reset({
+            index: 0,
+            actions: [NavigationActions.navigate({routeName: 'Main', user: response.data })],
+            key: null,
+        }));
     }
 }
 
@@ -87,12 +102,32 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
 
-    button: {
+    containerInner: {
+        flexDirection: "row",
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#3066BE',
+        borderRadius: 10,
+        padding: 5,
+        margin: 15,
+    },
+
+    buttonSignup: {
         height: 42,
         width: 100,
         justifyContent: "center",
         alignItems: "center",
-        marginTop: 10,
+        margin: 10,
+        borderRadius: 5,
+        backgroundColor: '#963484',
+    },
+
+    buttonLogin: {
+        height: 42,
+        width: 100,
+        justifyContent: "center",
+        alignItems: "center",
+        margin: 10,
         borderRadius: 5,
         backgroundColor: '#28C2FF',
     },

@@ -1,20 +1,18 @@
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 
-import Main from './pages/main'
 import Login from './pages/login'
-import Initial from './pages/initial';
+import Main from './pages/main';
 
 
 export default createAppContainer(
     createStackNavigator(
     {
-        Main:Main,
         Login:Login,
-        Initial:Initial,
+        Main:Main,
     },
     {
-        initialRouteName: 'Main',
+        initialRouteName: 'Login',
         defaultNavigationOptions: {
             headerStyle: {
                 backgroundColor: "#3066BE"
