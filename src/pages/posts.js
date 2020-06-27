@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, FlatList, Image, processColor } from 'react-native'
 import { WebView } from 'react-native-webview'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import { Rating } from 'react-native-ratings';
 import Icon from 'react-native-vector-icons/AntDesign';
-import { Rating, AirbnbRating } from 'react-native-ratings';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export default class ListPosts extends Component {
     constructor() {
@@ -41,23 +41,75 @@ export default class ListPosts extends Component {
                     <Text style={styles.text}>Genre: {item.genre}</Text>
                     <View style={{ flex: 1, flexDirection: "row", padding: 0, margin: 0 }}>
                         <Image style={{ width: 18, height: 18, marginRight: 5 }} source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Star_icon_stylized.svg/1200px-Star_icon_stylized.svg.png' }} />
-                        <Text style={styles.text}>{item.rating}</Text>
+                        <Text style={{ color: "#eebc27", fontWeight: "bold" }}>{item.rating}</Text>
                     </View>
                 </View>
                 <View style={styles.summaryRight}>
-                    <Image style={{ width: 170, height: 170 }} source={{ uri: 'https://miro.medium.com/max/2040/1*YFroPGj9dpPx7nqf045AUQ.png' }} />
+                    <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-between" }}>
+                        <Text style={{ flex: 1 }}>Shooting</Text>
+                        <Rating
+                            type='custom'
+                            ratingBackgroundColor='#c8c7c8'
+                            ratingCount={5}
+                            imageSize={20}
+                            onFinishRating={() => { }}
+                            style={{ paddingLeft: 5 }}
+                        />
+                    </View>
+                    <View style={{ flex: 1, flexDirection: "row" }}>
+                        <Text style={{ flex: 1 }}>Passing</Text>
+                        <Rating
+                            type='custom'
+                            ratingBackgroundColor='#c8c7c8'
+                            ratingCount={5}
+                            imageSize={20}
+                            onFinishRating={this.ratingCompleted}
+                            style={{ paddingLeft: 5 }}
+                        />
+                    </View>
+                    <View style={{ flex: 1, flexDirection: "row" }}>
+                        <Text style={{ flex: 1 }}>Dribbling</Text>
+                        <Rating
+                            type='custom'
+                            ratingBackgroundColor='#c8c7c8'
+                            ratingCount={5}
+                            imageSize={20}
+                            onFinishRating={this.ratingCompleted}
+                            style={{ paddingLeft: 5 }}
+                        />
+                    </View>
+                    <View style={{ flex: 1, flexDirection: "row" }}>
+                        <Text style={{ flex: 1 }}>Defending</Text>
+                        <Rating
+                            type='custom'
+                            ratingBackgroundColor='#c8c7c8'
+                            ratingCount={5}
+                            imageSize={20}
+                            onFinishRating={this.ratingCompleted}
+                            style={{ paddingLeft: 5 }}
+                        />
+                    </View>
+                    <View style={{ flex: 1, flexDirection: "row" }}>
+                        <Text style={{ flex: 1 }}>Physical</Text>
+                        <Rating
+                            type='custom'
+                            ratingBackgroundColor='#c8c7c8'
+                            ratingCount={5}
+                            imageSize={20}
+                            onFinishRating={this.ratingCompleted}
+                            style={{ paddingLeft: 5 }}
+                        />
+                    </View>
                 </View>
             </View>
             <View style={styles.body}>
                 <WebView source={{ uri: item.url }} />
             </View>
-            <View style={styles.divButton}>
-                <AirbnbRating
-                    reviews={['1/5', '2/5', '3/5', '4/5', '5/5']}
-                    isDisabled={true}
-                    onFinishRating={this.ratingCompleted}
-                    style={{ paddingVertical: 10 }}
-                />
+            <View style={styles.divConfirm}>
+                <TouchableOpacity>
+                    <Icon name="check" size={30} />
+                </TouchableOpacity>
+
             </View>
         </View>
     )
@@ -97,13 +149,15 @@ const styles = StyleSheet.create({
     },
 
     summaryLeft: {
-        flex: 0.5,
+        flex: 0.4,
     },
 
     summaryRight: {
-        flex: 0.5,
+        flex: 0.6,
+        paddingTop: 60,
+        paddingLeft: 10,
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
     },
 
     textName: {
@@ -126,9 +180,19 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "row",
         margin: 5,
+        padding: 5,
         alignContent: "center",
         justifyContent: "center",
         borderBottomWidth: 0.5,
+    },
+
+    divConfirm: {
+        flex: 1,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-evenly",
+        margin: 10,
+        borderBottomWidth: 0.5
     },
 
     button: {
@@ -144,7 +208,7 @@ const styles = StyleSheet.create({
 const posts = [
     {
         id: "1",
-        name: "Cristiano Ronaldo",
+        name: "Cristiano Rolnado",
         age: 37,
         position: "st",
         foot: "right",
@@ -183,27 +247,5 @@ const posts = [
     }
 ]
 
-const options = {
-    width: 290,
-    height: 290,
-    margin: {
-        top: 20,
-        left: 20,
-        right: 30,
-        bottom: 20
-    },
-    r: 150,
-    max: 100,
-    fill: "#2980B9",
-    stroke: "#2980B9",
-    animate: {
-        type: 'oneByOne',
-        duration: 200
-    },
-    label: {
-        fontFamily: 'Arial',
-        fontSize: 14,
-        fontWeight: true,
-        fill: '#34495E'
-    }
-}
+const fill = 'rgb(134, 65, 244)'
+const dataBar = [50, 10, 40, 95, -4, -24, null, 85, undefined, 0, 35, 53, -53, 24, 50, -20, -80]
