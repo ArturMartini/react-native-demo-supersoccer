@@ -53,11 +53,10 @@ export default class Login extends Component {
             password: this.state.password,
         }
 
-        const response = await api.post('/v1/login', login)
-        console.log(response.data)
+        // const response = await api.post('/v1/login', login)
         this.props.navigation.dispatch(StackActions.reset({
             index: 0,
-            actions: [NavigationActions.navigate({routeName: 'Main', user: response.data })],
+            actions: [NavigationActions.navigate({routeName: 'Main', user: {} })],
             key: null,
         }));
     }

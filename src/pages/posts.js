@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, FlatList, Image, processColor } from 'react-native'
+import { View, Text, StyleSheet, FlatList, Image } from 'react-native'
 import { WebView } from 'react-native-webview'
 import { Rating } from 'react-native-ratings';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -12,6 +12,11 @@ export default class ListPosts extends Component {
             posts: posts,
             data: {},
         };
+    }
+
+    confirmRating = id => {
+        const filteredData = this.state.posts.filter(item => item.id !== id);
+        this.setState({ posts: filteredData });
     }
 
     componentDidMount() {
@@ -29,6 +34,7 @@ export default class ListPosts extends Component {
 
     renderItem = ({ item }) => (
         <View style={styles.container}>
+
             <View style={styles.header}>
                 <View style={styles.summaryLeft}>
                     <Image
@@ -52,7 +58,7 @@ export default class ListPosts extends Component {
                             ratingBackgroundColor='#c8c7c8'
                             ratingCount={5}
                             imageSize={20}
-                            onFinishRating={() => { }}
+                            onFinishRating={this.ratingCompleted}
                             style={{ paddingLeft: 5 }}
                         />
                     </View>
@@ -106,7 +112,7 @@ export default class ListPosts extends Component {
                 <WebView source={{ uri: item.url }} />
             </View>
             <View style={styles.divConfirm}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => this.confirmRating(item.id)}>
                     <Icon name="check" size={30} />
                 </TouchableOpacity>
 
@@ -115,16 +121,24 @@ export default class ListPosts extends Component {
     )
 
     render() {
-        return (
-            <View>
-                <FlatList
-                    contentContainerStyle={styles.list}
-                    data={this.state.posts}
-                    keyExtractor={item => item.id}
-                    renderItem={this.renderItem}
-                />
-            </View>
-        )
+        if (this.state.posts.length > 0) {
+            return (
+                <View>
+                    <FlatList
+                        contentContainerStyle={styles.list}
+                        data={this.state.posts}
+                        keyExtractor={item => item.id}
+                        renderItem={this.renderItem}
+                    />
+                </View>
+            )
+        } else {
+            return (
+                <View style={styles.noData}>
+                    <Text>No more data.</Text>
+                </View>
+            )
+        }
     }
 }
 
@@ -201,6 +215,12 @@ const styles = StyleSheet.create({
 
     list: {
         margin: 2,
+    },
+
+    noData: {
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center"
     }
 
 })
