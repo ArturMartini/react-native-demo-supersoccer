@@ -13,7 +13,7 @@
     "@chartiful/react-native-chart-builder": "^0.1.8",
     "@chartiful/react-native-horizontal-bar-graph": "^0.1.2",
     "@react-native-community/masked-view": "^0.1.10",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "immutability-helper": "^3.1.1",
     "react": "16.11.0",
     "react-horizontal-stacked-bar-chart": "^8.15.2",
